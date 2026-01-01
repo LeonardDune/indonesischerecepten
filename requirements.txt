@@ -1,4 +1,17 @@
 requests
 beautifulsoup4
 rdflib
+rdflib-neo4j
+neo4j
+python-dotenv
+sentence-transformers
+neo4j-graphrag
+openai
 html5lib
+tenacity!=8.4.0
+langchain==0.3.9
+langchain-openai==0.2.10
+streamlit==1.51.0
+langchainhub==0.1.21
+langchain-neo4j==0.1.1
+plotly

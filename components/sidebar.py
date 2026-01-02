@@ -17,6 +17,7 @@ def render_sidebar():
              st.page_link("pages/1_Recepten.py", label="Recepten", icon="🍳")
 
         st.page_link("pages/2_Categorieën.py", label="Categorieën", icon="📂")
+        st.page_link("pages/3_Chat.py", label="Chatbot", icon="💬")
         
         st.divider()
         st.markdown("### Info")

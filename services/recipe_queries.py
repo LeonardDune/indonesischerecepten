@@ -62,7 +62,6 @@ def search_recipes(countries=None, regions=None, methods=None, ingredients=None,
     RETURN r {{
       id: r.uri,
       name: r.schema__name,
-      description: r.schema__description,
       image: r.schema__image,
       yield: r.schema__recipeYield,
       mainIngredient: mainIngredient,
@@ -99,7 +98,6 @@ def get_recipe_details(recipe_id):
     RETURN r {
              .uri,
              name: r.schema__name,
-             description: r.schema__description,
              image: r.schema__image,
              yield: r.schema__recipeYield,
              instructions: r.schema__recipeInstructions
@@ -145,7 +143,6 @@ def get_related_recipes(recipe_id, limit=6):
         id: candidate.uri, 
         name: candidate.schema__name, 
         image: candidate.schema__image,
-        description: candidate.schema__description,
         yield: candidate.schema__recipeYield,
         mainIngredient: mainIngredient,
         countries: countries,

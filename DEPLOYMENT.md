@@ -65,7 +65,7 @@ Update de backend CORS instellingen voor productie:
 # backend/app/main.py
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://jouw-vercel-app.vercel.app"], # Vervang met je Vercel URL
+    allow_origins=["https://world-recipes-eight.vercel.app/"], # Vervang met je Vercel URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

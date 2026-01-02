@@ -5,3 +5,5 @@ __pycache__
 .DS_Store
 .vscode
 .pytest_cache
+frontend/.gitignore
+enrich_full.log

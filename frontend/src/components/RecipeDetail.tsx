@@ -126,7 +126,7 @@ export const RecipeDetail: React.FC<RecipeDetailProps> = ({ recipe, ingredients,
                     <h2 className="text-2xl font-bold text-white">Bereiding</h2>
                     <div className="glass p-8 rounded-3xl space-y-6 text-slate-300 leading-relaxed">
                         {recipe.instructions ? (
-                            recipe.instructions.split('\n').filter(s => s.trim()).map((step, idx) => (
+                            (Array.isArray(recipe.instructions) ? recipe.instructions.map(step => step.replace(/^\d+\.\s+/, '')) : recipe.instructions.split('\n').filter(s => s.trim())).map((step, idx) => (
                                 <div key={idx} className="flex gap-6 items-start group">
                                     <span className="shrink-0 w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-sm">
                                         {idx + 1}

@@ -23,9 +23,10 @@ def search_recipes(countries=None, regions=None, methods=None, ingredients=None,
         params["methods"] = tuple(methods)
         
     if ingredients:
-        match_parts.append("(r)-[:kb__hasIngredientUsage]->(:kb__IngredientUsage)-[:kb__ingredient]->(i:kb__Ingredient)")
-        where_clauses.append("i.rdfs__label IN $ingredients")
-        params["ingredients"] = tuple(ingredients)
+        for i, ingredient in enumerate(ingredients):
+            match_parts.append(f"(r)-[:kb__hasIngredientUsage]->(:kb__IngredientUsage)-[:kb__ingredient]->(i{i}:kb__Ingredient)")
+            where_clauses.append(f"i{i}.rdfs__label = $ingredient_{i}")
+            params[f"ingredient_{i}"] = ingredient
         
     if kwargs.get('main_ingredients'):
         match_parts.append("(r)-[:kb__hasPrimaryIngredient]->(mi:schema__DefinedTerm)")
@@ -62,7 +63,7 @@ def search_recipes(countries=None, regions=None, methods=None, ingredients=None,
       image: r.schema__image,
       yield: r.schema__recipeYield,
       instructions: r.schema__recipeInstructions,
-      description: r.schema__description,
+      description: r.description,
       mainIngredient: head(mis),
       countries: cs,
       regions: rs,
@@ -108,7 +109,7 @@ def get_recipe_details(recipe_id):
              name: r.schema__name,
              image: r.schema__image,
              yield: r.schema__recipeYield,
-             description: r.schema__description,
+             description: r.description,
              instructions: r.schema__recipeInstructions,
              mainIngredient: mi.schema__name,
              countries: countries,
@@ -142,11 +143,12 @@ def get_related_recipes(recipe_id, limit=6):
          collect(DISTINCT c.schema__name) as countries,
          collect(DISTINCT coalesce(rg.rdfs__label, last(split(rg.uri, '/')))) as regions,
          collect(DISTINCT m.schema__name) as methods
-    RETURN candidate { 
-        id: candidate.uri, 
-        name: candidate.schema__name, 
+    RETURN candidate {
+        id: candidate.uri,
+        name: candidate.schema__name,
         image: candidate.schema__image,
         yield: candidate.schema__recipeYield,
+        description: candidate.description,
         mainIngredient: mainIngredient,
         countries: countries,
         regions: regions,

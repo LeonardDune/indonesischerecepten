@@ -8,7 +8,7 @@ export interface Recipe {
     countries: string[];
     regions: string[];
     methods: string[];
-    instructions?: string;
+    instructions?: string | string[];
 }
 
 export interface SearchResponse {

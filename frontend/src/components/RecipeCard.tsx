@@ -39,7 +39,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onTagClick }) =>
             onClick={handleCardClick}
         >
             {/* Image Container */}
-            <div className="relative h-48 w-full overflow-hidden shrink-0">
+            <div className="relative h-40 w-full overflow-hidden shrink-0">
                 {recipe.image ? (
                     <img
                         src={recipe.image}
@@ -83,11 +83,11 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onTagClick }) =>
 
             {/* Content */}
             <div className="p-5 flex flex-col flex-1">
-                <h3 className="text-lg font-bold text-white mb-2 line-clamp-2 group-hover:text-primary transition-colors min-h-[3.5rem]">
+                <h3 className="text-lg font-bold text-white mb-1 line-clamp-2 group-hover:text-primary transition-colors min-h-[3.5rem]">
                     {recipe.name}
                 </h3>
 
-                <p className="text-sm text-slate-400 line-clamp-2 mb-4 h-10 overflow-hidden">
+                <p className="text-xs text-slate-400 line-clamp-4 mb-3 h-16 overflow-hidden">
                     {recipe.description || "Geen beschrijving beschikbaar."}
                 </p>
 

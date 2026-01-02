@@ -3,6 +3,8 @@ from services.chat_agent import generate_response
 from utils import write_message
 
 st.set_page_config(page_title="Chat", page_icon="💬")
+from components.sidebar import render_sidebar
+render_sidebar()
 
 st.title("Recepten Assistant 💬")
 st.markdown("Stel een vraag over recepten, ingrediënten of vraag om inspiratie!")

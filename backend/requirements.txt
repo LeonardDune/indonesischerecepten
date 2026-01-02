@@ -6,5 +6,7 @@ langchain>=0.1.0
 langchain-openai>=0.1.0
 langchain-core>=0.1.0
 langchain-neo4j==0.1.0
+neo4j-graphrag>=0.1.0
+sentence-transformers>=2.0.0
 python-dotenv==1.0.0
 neo4j>=5.25.0

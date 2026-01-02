@@ -6,4 +6,9 @@ __pycache__
 .vscode
 .pytest_cache
 frontend/.gitignore
+frontend/.next
+frontend/out
 enrich_full.log
+*.log
+node_modules
+.vercel

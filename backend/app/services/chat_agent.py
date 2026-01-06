@@ -5,7 +5,7 @@ from langchain.tools import Tool
 from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
 from langchain.schema import StrOutputParser
 
-from ..llm import llm
+from ..llm import get_llm
 from .neo4j import get_neo4j_service
 from ..tools.vector import get_recipe
 from ..tools.cypher import cypher_qa
@@ -17,6 +17,7 @@ def get_recipe_chat_chain():
             ("human", "{input}"),
         ]
     )
+    llm = get_llm()
     return chat_prompt | llm | StrOutputParser()
 
 def get_agent_tools():
@@ -91,6 +92,7 @@ def initialize_agent():
     {agent_scratchpad}
     """)
     
+    llm = get_llm()
     agent = create_react_agent(llm, tools, agent_prompt)
     
     agent_executor = AgentExecutor(

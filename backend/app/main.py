@@ -18,7 +18,8 @@ app = FastAPI(title="Indonesische Recepten API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://world-recipes-h9o8i3qef-leonarddunes-projects.vercel.app",  # Jouw daadwerkelijke Vercel URL
+        "https://world-recipes-eight.vercel.app",  # Custom domain - stabiel
+        "https://world-recipes-leonarddunes-projects.vercel.app",  # Production URL - stabiel
         "http://localhost:3000",  # Local development
     ],
     allow_credentials=False,
@@ -86,10 +87,16 @@ async def api_get_filters():
 
 @app.post("/api/chat", response_model=ChatResponse)
 async def api_chat(request: ChatRequest):
+    print(f"DEBUG: Chat request received: {request.message}")
     try:
+        print("DEBUG: Calling generate_response...")
         response = generate_response(request.message, request.session_id)
+        print(f"DEBUG: Response generated: {response[:100]}...")
         return ChatResponse(response=response)
     except Exception as e:
+        print(f"DEBUG: Exception in api_chat: {str(e)}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/health")

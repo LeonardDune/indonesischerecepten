@@ -1,4 +1,4 @@
-from ..llm import llm
+from ..llm import get_llm  
 from ..services.neo4j import get_neo4j_service
 from langchain_neo4j import GraphCypherQAChain
 from langchain.prompts.prompt import PromptTemplate
@@ -40,16 +40,19 @@ def cypher_qa(input_question):
 
     Cypher Query:
     """
-    
+
     cypher_prompt = PromptTemplate.from_template(CYPHER_GENERATION_TEMPLATE)
-    
+
+    # --- Lazy LLM factory gebruiken ---
+    llm_instance = get_llm()
+
     chain = GraphCypherQAChain.from_llm(
-        llm,
+        llm_instance,
         graph=neo4j_service.graph,
         verbose=True,
         cypher_prompt=cypher_prompt,
         allow_dangerous_requests=True,
         return_direct=True  # Return raw Cypher results
     )
-    
+
     return chain.invoke(input_question)

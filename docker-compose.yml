@@ -1,0 +1,19 @@
+#version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: recipes_backend
+    ports:
+      - "${PORT:-8000}:${PORT:-8000}"  # map host:container
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - recipes_network
+
+networks:
+  recipes_network:
+    driver: bridge

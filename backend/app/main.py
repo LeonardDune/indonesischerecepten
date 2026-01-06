@@ -18,10 +18,10 @@ app = FastAPI(title="Indonesische Recepten API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://world-recipes-h9o8i3qef-leonarddunes-projects.vercel.app/",  # Jouw daadwerkelijke Vercel URL
+        "https://world-recipes-h9o8i3qef-leonarddunes-projects.vercel.app",  # Jouw daadwerkelijke Vercel URL
         "http://localhost:3000",  # Local development
     ],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )

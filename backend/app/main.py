@@ -18,14 +18,14 @@ app = FastAPI(title="Indonesische Recepten API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://world-recipes-eight.vercel.app/",  # Production URL
-        "http://localhost:3000",  # Local development frontend
-        "http://127.0.0.1:3000",  # Alternative localhost
+        "https://world-recipes-h9o8i3qef-leonarddunes-projects.vercel.app/",  # Jouw daadwerkelijke Vercel URL
+        "http://localhost:3000",  # Local development
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # Models
 class ChatRequest(BaseModel):

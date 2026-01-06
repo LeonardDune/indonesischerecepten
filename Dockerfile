@@ -39,4 +39,6 @@ ENV PYTHONUNBUFFERED=1
 EXPOSE 8000
 
 # Use shell form so $PORT is expanded by the shell at runtime
-CMD uvicorn app.main:app --host 0.0.0.0 --port $PORT
+#CMD uvicorn app.main:app --host 0.0.0.0 --port $PORT
+CMD uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}
+

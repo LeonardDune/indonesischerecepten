@@ -17,7 +17,11 @@ app = FastAPI(title="Indonesische Recepten API")
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://world-recipes-eight.vercel.app/"], # Vervang met je Vercel URL
+    allow_origins=[
+        "https://world-recipes-eight.vercel.app/",  # Production URL
+        "http://localhost:3000",  # Local development frontend
+        "http://127.0.0.1:3000",  # Alternative localhost
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

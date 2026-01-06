@@ -1,0 +1,36 @@
+__pycache__/
+.venv/
+venv/
+*.pyc
+*.pyo
+*.pyd
+build/
+dist/
+*.egg-info
+
+# Exclude frontend and local-only code
+frontend/
+pages/
+public/
+node_modules/
+components/
+
+# Exclude repo-level tooling and large datasets not needed at runtime
+scripts/
+scraper/
+tools/
+_bmad/
+_bmad-output/
+
+# Exclude large TTL dataset files
+kokkieblanda.ttl
+kokkieblanda_with_embeddings.ttl
+
+# Local config and env
+.env
+.env.*
+
+# Other local files
+.DS_Store
+*.log
+.idea/

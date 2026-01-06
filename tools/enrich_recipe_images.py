@@ -2,9 +2,15 @@ import time
 import requests
 import datetime
 import argparse
-from services.neo4j import Neo4jService
-import streamlit as st
+import sys
 import os
+from pathlib import Path
+
+# Add the project root to Python path so we can import from services
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root))
+
+from langchain_neo4j import Neo4jGraph
 
 try:
     import tomllib  # Python 3.11+
@@ -65,25 +71,23 @@ def get_pixabay_image(query, api_key):
     return None
 
 def enrich_recipes(limit=None, force=False):
-    # Attempt to read secrets
+    # Read secrets from .streamlit/secrets.toml manually
     secrets = {}
-    try:
-        # Try streamlit secrets first
-        secrets = st.secrets
-    except Exception:
-        # Fallback: Read .streamlit/secrets.toml manually
-        secrets_path = os.path.join(".streamlit", "secrets.toml")
-        if os.path.exists(secrets_path):
-            with open(secrets_path, "rb") as f:
-                try:
-                    import tomllib
-                    secrets = tomllib.load(f)
-                except Exception:
-                    # Very basic parser if no toml library
-                    for line in f.read().decode().splitlines():
-                        if "=" in line:
-                            k, v = line.split("=", 1)
-                            secrets[k.strip()] = v.strip().strip('"').strip("'")
+    secrets_path = project_root / ".streamlit" / "secrets.toml"
+    if secrets_path.exists():
+        with open(secrets_path, "r", encoding="utf-8") as f:
+            content = f.read()
+            try:
+                secrets = tomllib.loads(content)
+            except Exception:
+                # Very basic parser if no toml library
+                for line in content.splitlines():
+                    if "=" in line:
+                        k, v = line.split("=", 1)
+                        secrets[k.strip()] = v.strip().strip('"').strip("'")
+    else:
+        print(f"Error: Secrets file not found at {secrets_path}")
+        return
 
     neo4j_uri = secrets.get("NEO4J_URI")
     neo4j_user = secrets.get("NEO4J_USERNAME")
@@ -91,6 +95,8 @@ def enrich_recipes(limit=None, force=False):
     unsplash_key = secrets.get("UNSPLASH_ACCESS_KEY")
     pixabay_key = secrets.get("PIXABAY_API_KEY")
 
+    print(unsplash_key)
+    
     if not all([neo4j_uri, neo4j_user, neo4j_password]):
         print("Error: Required Neo4j secrets missing.")
         return
@@ -99,8 +105,14 @@ def enrich_recipes(limit=None, force=False):
         print("Error: No image provider keys found (UNSPLASH_ACCESS_KEY or PIXABAY_API_KEY).")
         return
 
-    neo4j = Neo4jService()
-    
+    # Create Neo4j connection
+    neo4j = Neo4jGraph(
+        url=neo4j_uri,
+        username=neo4j_user,
+        password=neo4j_password,
+        database=secrets.get("NEO4J_DATABASE", "neo4j")
+    )
+
     # Fetch recipes with their cuisine and primary ingredient
     # Skip recipes that already have an Unsplash image unless 'force' is True
     query = """
@@ -108,13 +120,13 @@ def enrich_recipes(limit=None, force=False):
     WHERE $force = True OR r.schema__image IS NULL OR NOT r.schema__image STARTS WITH 'https://images.unsplash.com'
     OPTIONAL MATCH (r)-[:schema__recipeCuisine]->(c:schema__DefinedTerm)
     OPTIONAL MATCH (r)-[:kb__hasPrimaryIngredient]->(mi:schema__DefinedTerm)
-    RETURN r.uri as uri, r.schema__name as name, 
-           c.schema__name as cuisine, 
+    RETURN r.uri as uri, r.schema__name as name,
+           c.schema__name as cuisine,
            mi.schema__name as primary_ingredient
     """
     if limit:
         query += f" LIMIT {limit}"
-    
+
     recipes = neo4j.query(query, {"force": force})
     
     print(f"Found {len(recipes)} recipes to process.")

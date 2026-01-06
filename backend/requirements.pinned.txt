@@ -1,0 +1,7 @@
+# Pinned requirements for production builds
+# Use this with the Docker build arg PIP_EXTRA_INDEX_URL to fetch CPU-only wheels for torch:
+# docker build --build-arg PIP_EXTRA_INDEX_URL=https://download.pytorch.org/whl/cpu -t recipes-backend:local .
+
+# Pinned production requirements (backend). Heavy embedding libs moved to separate service.
+# Include the backend runtime requirements
+-r requirements.txt

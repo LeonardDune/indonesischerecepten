@@ -1,0 +1,16 @@
+# Heavy build-time dependencies used only to export the model to ONNX.
+# These are installed in the builder stage only.
+
+# Pin numpy to a 1.x release available for Python 3.11
+# (1.25.2 is compatible and available on PyPI)
+numpy==1.25.2
+# ONNX is required by torch.onnx.export
+onnx==1.16.0
+
+# Needed for post-export quantization (builder-only)
+onnxruntime==1.16.0
+
+sentence-transformers==2.2.2
+torch==2.2.2+cpu
+transformers==4.33.2
+tokenizers==0.13.3

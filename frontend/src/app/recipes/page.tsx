@@ -105,9 +105,31 @@ function RecipesContent() {
     const totalPages = Math.ceil(total / LIMIT);
 
     return (
-        <div className="flex gap-10 items-start">
-            {/* Sidebar Filters */}
-            <aside className="w-80 shrink-0">
+        <div className="flex flex-col md:flex-row gap-8 items-start">
+            {/* Mobile Filter Toggle */}
+            <div className="md:hidden w-full mb-4">
+                <details className="group">
+                    <summary className="flex items-center justify-between p-4 glass rounded-xl list-none cursor-pointer text-white font-bold">
+                        <span>Filters & Zoeken</span>
+                        <ChevronRight className="transition-transform group-open:rotate-90" size={20} />
+                    </summary>
+                    <div className="mt-4">
+                        {filterOptions ? (
+                            <Filters
+                                options={filterOptions}
+                                selected={activeFilters}
+                                onChange={handleFilterChange}
+                                onReset={handleReset}
+                            />
+                        ) : (
+                            <div className="glass h-40 rounded-xl animate-pulse" />
+                        )}
+                    </div>
+                </details>
+            </div>
+
+            {/* Desktop Sidebar Filters */}
+            <aside className="hidden md:block w-80 shrink-0 sticky top-24">
                 {filterOptions ? (
                     <Filters
                         options={filterOptions}
@@ -121,17 +143,17 @@ function RecipesContent() {
             </aside>
 
             {/* Main Content */}
-            <div className="flex-1 space-y-8">
+            <div className="flex-1 space-y-8 w-full">
                 {/* Header */}
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <h1 className="text-3xl font-black text-white">Recepten</h1>
+                        <h1 className="text-2xl md:text-3xl font-black text-white">Recepten</h1>
                         <p className="text-slate-500 text-sm mt-1">
                             {total} authentieke gerechten gevonden
                         </p>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 self-end md:self-auto">
                         <button
                             disabled={page === 1}
                             onClick={() => setPage(p => p - 1)}
@@ -154,13 +176,13 @@ function RecipesContent() {
 
                 {/* Grid */}
                 {loading ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                         {[1, 2, 3, 4, 5, 6].map(i => (
-                            <div key={i} className="h-80 glass rounded-2xl animate-pulse" />
+                            <div key={i} className="h-40 md:h-80 glass rounded-2xl animate-pulse" />
                         ))}
                     </div>
                 ) : recipes.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                         {recipes.map((recipe) => (
                             <RecipeCard
                                 key={recipe.id}
@@ -201,7 +223,7 @@ function RecipesContent() {
                             >
                                 <ChevronLeft size={20} />
                             </button>
-                            <div className="flex gap-1">
+                            <div className="hidden md:flex gap-1">
                                 {[...Array(Math.min(5, totalPages))].map((_, i) => {
                                     const p = page <= 3 ? i + 1 : (page >= totalPages - 2 ? totalPages - 4 + i : page - 2 + i);
                                     if (p <= 0 || p > totalPages) return null;

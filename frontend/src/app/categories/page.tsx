@@ -54,7 +54,7 @@ export default function CategoriesPage() {
                     <Sparkles size={16} />
                     Ontdek de collectie
                 </motion.div>
-                <h1 className="text-5xl font-black text-white mb-4 leading-tight">
+                <h1 className="text-3xl md:text-5xl font-black text-white mb-4 leading-tight">
                     De <span className="text-primary italic">Smaak</span> van de Wereld.
                 </h1>
                 <p className="text-slate-400 text-lg">
@@ -64,7 +64,7 @@ export default function CategoriesPage() {
             </header>
 
             {/* Custom Tabs */}
-            <div className="flex flex-wrap gap-2 p-1.5 glass rounded-3xl w-fit">
+            <div className="flex flex-nowrap md:flex-wrap gap-2 p-1.5 glass rounded-3xl w-full md:w-fit overflow-x-auto scrollbar-hide">
                 {tabs.map((tab) => {
                     const Icon = tab.icon;
                     const isActive = activeTab === tab.id;
@@ -72,7 +72,7 @@ export default function CategoriesPage() {
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
-                            className={`flex items-center gap-3 px-8 py-4 rounded-2xl transition-all duration-500 whitespace-nowrap ${isActive
+                            className={`flex items-center gap-3 px-6 md:px-8 py-4 rounded-2xl transition-all duration-500 whitespace-nowrap shrink-0 ${isActive
                                 ? "bg-primary text-white shadow-xl shadow-primary/30 scale-105"
                                 : "text-slate-400 hover:text-white hover:bg-white/5"
                                 }`}

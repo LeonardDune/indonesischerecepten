@@ -15,7 +15,7 @@ export const Filters: React.FC<FiltersProps> = ({ options, selected, onChange, o
     const hasFilters = Object.values(selected).some(v => v.length > 0);
 
     return (
-        <div className="space-y-8 glass p-6 rounded-2xl sticky top-24">
+        <div className="space-y-8 glass p-6 rounded-2xl md:sticky md:top-24">
             <div className="flex items-center justify-between border-b border-white/5 pb-4">
                 <h3 className="font-bold text-white flex items-center gap-2">
                     Filters

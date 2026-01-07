@@ -17,12 +17,12 @@ export const RecipeDetail: React.FC<RecipeDetailProps> = ({ recipe, ingredients,
     const router = useRouter();
 
     return (
-        <div className="max-w-5xl mx-auto space-y-10">
+        <div className="max-w-5xl mx-auto space-y-6 md:space-y-10 pb-20">
             {/* Header / Back Navigation */}
             <div className="flex items-center justify-between">
                 <button
                     onClick={() => router.back()}
-                    className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors group"
+                    className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors group text-sm md:text-base"
                 >
                     <ChevronLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
                     Terug naar overzicht
@@ -38,11 +38,11 @@ export const RecipeDetail: React.FC<RecipeDetailProps> = ({ recipe, ingredients,
             </div>
 
             {/* Hero Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 items-start">
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="aspect-square rounded-3xl overflow-hidden glass shadow-2xl"
+                    className="aspect-video md:aspect-square rounded-3xl overflow-hidden glass shadow-2xl"
                 >
                     {recipe.image ? (
                         <img
@@ -61,27 +61,27 @@ export const RecipeDetail: React.FC<RecipeDetailProps> = ({ recipe, ingredients,
                     <div>
                         <div className="flex flex-wrap gap-2 mb-4">
                             {recipe.countries.map(c => (
-                                <span key={c} className="px-3 py-1 bg-primary/20 text-primary text-xs font-bold uppercase tracking-wider rounded-full">
+                                <span key={c} className="px-3 py-1 bg-primary/20 text-primary text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-full">
                                     {c}
                                 </span>
                             ))}
                             {recipe.regions.map(r => (
-                                <span key={r} className="px-3 py-1 bg-secondary/20 text-secondary text-xs font-bold uppercase tracking-wider rounded-full">
+                                <span key={r} className="px-3 py-1 bg-secondary/20 text-secondary text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-full">
                                     {r}
                                 </span>
                             ))}
                             {recipe.mainIngredient && (
-                                <span className="px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-bold uppercase tracking-wider rounded-full">
+                                <span className="px-3 py-1 bg-purple-500/20 text-purple-400 text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-full">
                                     {recipe.mainIngredient}
                                 </span>
                             )}
                         </div>
-                        <h1 className="text-4xl font-black text-white leading-tight">
+                        <h1 className="text-2xl md:text-4xl font-black text-white leading-tight">
                             {recipe.name}
                         </h1>
                     </div>
 
-                    <p className="text-slate-400 text-lg leading-relaxed">
+                    <p className="text-slate-400 text-base md:text-lg leading-relaxed">
                         {recipe.description || "Geen beschrijving beschikbaar voor dit authentieke recept."}
                     </p>
 

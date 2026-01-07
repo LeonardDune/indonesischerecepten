@@ -196,22 +196,24 @@ export default function ChatPage() {
             )}
 
             {/* Input Area */}
-            <form onSubmit={handleSend} className="relative mt-6">
-                <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    placeholder="Stel je culinaire vraag aan de SpiceRoute Assistant..."
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 pr-16 text-white placeholder:text-slate-600 focus:outline-none focus:border-primary/50 transition-all shadow-xl"
-                />
-                <button
-                    type="submit"
-                    disabled={!input.trim() || isLoading}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-primary text-white rounded-xl disabled:opacity-30 hover:bg-orange-600 transition-all shadow-lg shadow-primary/20"
-                >
-                    <Send size={20} />
-                </button>
-            </form>
+            <div className="mt-4 pb-4 md:pb-0 sticky bottom-0 bg-background/80 backdrop-blur-xl md:static md:bg-transparent">
+                <form onSubmit={handleSend} className="relative">
+                    <input
+                        type="text"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        placeholder="Stel je culinaire vraag..."
+                        className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 pr-16 text-white placeholder:text-slate-600 focus:outline-none focus:border-primary/50 transition-all shadow-xl text-base"
+                    />
+                    <button
+                        type="submit"
+                        disabled={!input.trim() || isLoading}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-primary text-white rounded-xl disabled:opacity-30 hover:bg-orange-600 transition-all shadow-lg shadow-primary/20"
+                    >
+                        <Send size={20} />
+                    </button>
+                </form>
+            </div>
         </div>
     );
 }
